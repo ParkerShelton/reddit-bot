@@ -58,7 +58,10 @@ def get_boolean_input(prompt, default=True):
 
 def create_api_key_file(api_key):
     """Create or update the API key file"""
-    with open('api_key.txt', 'w') as f:
+    # Get the path to the root directory
+    root_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    api_key_path = os.path.join(root_dir, 'api_key.txt')
+    with open(api_key_path, 'w') as f:
         f.write(api_key)
     print("API key saved successfully.")
 
@@ -84,8 +87,12 @@ def main():
     api_key = ""
     use_existing = False
     
+    # Get the path to the root directory
+    root_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    api_key_path = os.path.join(root_dir, 'api_key.txt')
+    
     # Check if api_key.txt exists
-    if os.path.exists('api_key.txt'):
+    if os.path.exists(api_key_path):
         use_existing = get_boolean_input("Use existing API key from api_key.txt", True)
     
     if not use_existing:
@@ -104,8 +111,12 @@ def main():
     # Hardcode output folder to always be "get-audio"
     config['output_folder'] = "get-audio"
     
+    # Get the path to the root directory for the output folder
+    root_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    output_path = os.path.join(root_dir, config['output_folder'])
+    
     # Create the output folder if it doesn't exist
-    Path(config['output_folder']).mkdir(exist_ok=True)
+    Path(output_path).mkdir(exist_ok=True)
     
     # Ask for sort type
     sort_options = ["new", "hot", "top", "rising"]
@@ -162,8 +173,12 @@ def main():
         env = os.environ.copy()
         env["REDDIT_BOT_CONFIG"] = json.dumps(config)
         
+        # Get the path to main.py in the src directory
+        script_dir = os.path.dirname(os.path.abspath(__file__))
+        main_script = os.path.join(script_dir, "main.py")
+        
         # Call main.py with the configuration
-        subprocess.run([sys.executable, "main.py"], env=env)
+        subprocess.run([sys.executable, main_script], env=env)
     else:
         print("Scraper cancelled. Run this script again to configure and start the scraper.")
 

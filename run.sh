@@ -23,9 +23,9 @@ else
 fi
 
 # Check if the install.py file exists
-if [ -f "install.py" ]; then
+if [ -f "src/install.py" ]; then
     echo "Checking required dependencies..."
-    $PYTHON_CMD install.py
+    $PYTHON_CMD src/install.py
     
     # Check if installation succeeded
     if [ $? -ne 0 ]; then
@@ -35,11 +35,11 @@ if [ -f "install.py" ]; then
     
     echo -e "\nStarting Reddit Bot Console Interface...\n"
 else
-    echo "Warning: install.py not found. Skipping dependency check."
+    echo "Warning: src/install.py not found. Skipping dependency check."
 fi
 
 # Run the console interface
-$PYTHON_CMD console_interface.py
+$PYTHON_CMD src/console_interface.py
 
 # Exit with the same status as the Python script
 exit $?

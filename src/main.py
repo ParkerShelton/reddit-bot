@@ -10,7 +10,7 @@ import sys
 import json
 
 # Default Configuration
-TTS_SCRIPT_NAME = "voice-over.py"  # Name of your TTS script
+TTS_SCRIPT_NAME = os.path.join(os.path.dirname(os.path.abspath(__file__)), "voice-over.py")  # Full path to TTS script
 
 # Check for configuration from console_interface.py
 config_json = os.environ.get("REDDIT_BOT_CONFIG", "{}")
@@ -40,9 +40,13 @@ except json.JSONDecodeError:
 # API Key (reads from api_key.txt file, or falls back to environment variable)
 def load_api_key():
     """Load API key from api_key.txt file or environment variable"""
+    # Get the path to the root directory
+    root_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    api_key_path = os.path.join(root_dir, 'api_key.txt')
+    
     # Try to read from file first
     try:
-        with open('api_key.txt', 'r') as f:
+        with open(api_key_path, 'r') as f:
             key = f.read().strip()
             if key:
                 return key
@@ -353,10 +357,14 @@ def generate_reddit_urls(subreddits, sort_type='new', limit=25):
         urls.append(url)
     return urls
 
-# Create get-audio folder if it doesn't exist
-Path(OUTPUT_FOLDER).mkdir(exist_ok=True)
+# Get the path to the root directory
+root_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-output_filename = os.path.join(OUTPUT_FOLDER, f"reddit_posts_{datetime.now().strftime('%Y%m%d_%H%M%S')}.txt")
+# Create get-audio folder if it doesn't exist (in root directory)
+output_dir = os.path.join(root_dir, OUTPUT_FOLDER)
+Path(output_dir).mkdir(exist_ok=True)
+
+output_filename = os.path.join(output_dir, f"reddit_posts_{datetime.now().strftime('%Y%m%d_%H%M%S')}.txt")
 
 print(f"Starting scraper... Posts will be saved to: {output_filename}")
 print(f"AI Cleaning: {'ENABLED (Groq)' if USE_AI_CLEANING else 'DISABLED'}")
@@ -389,4 +397,4 @@ if AUTO_GENERATE_AUDIO:
         print(f"⚠ Warning: TTS script '{TTS_SCRIPT_NAME}' not found in current directory.")
         print(f"Skipping automatic audio generation.")
 else:
-    print(f"\n💡 Tip: Run '{TTS_SCRIPT_NAME}' to convert posts to audio!")
+    print(f"\n💡 Tip: Run 'python3 src/voice-over.py' to convert posts to audio!")

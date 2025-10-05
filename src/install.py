@@ -49,7 +49,9 @@ def create_directory(directory_path):
 
 def create_api_key_file():
     """Create an empty api_key.txt file if it doesn't exist"""
-    api_key_path = "api_key.txt"
+    # Create it in the root directory, not in src
+    root_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    api_key_path = os.path.join(root_dir, "api_key.txt")
     if not os.path.exists(api_key_path):
         print("\nCreating empty api_key.txt file...")
         try:
@@ -99,8 +101,9 @@ def main():
     
     # Create required directories
     print("\nChecking required directories...")
-    create_directory("get-audio")
-    create_directory("old-posts")
+    root_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    create_directory(os.path.join(root_dir, "get-audio"))
+    create_directory(os.path.join(root_dir, "old-posts"))
     
     # Create API key file if it doesn't exist
     create_api_key_file()
@@ -110,14 +113,15 @@ def main():
     print("="*60)
     print("\nYou can now use the Reddit bot:")
     print("1. ./run.sh               - Run the interactive console interface (recommended)")
-    print("2. python3 console_interface.py - Run the interactive console directly")
+    print("2. python3 src/console_interface.py - Run the interactive console directly")
     
-    if os.path.exists("voice-over.py"):
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    if os.path.exists(os.path.join(script_dir, "voice-over.py")):
         print("\nFor manual operations:")
-        print("• python3 voice-over.py      - Convert text posts to audio manually")
+        print("• python3 src/voice-over.py      - Convert text posts to audio manually")
     
-    if os.path.exists("clear-files.py"):
-        print("• python3 clear-files.py     - Clean up generated files manually")
+    if os.path.exists(os.path.join(script_dir, "clear-files.py")):
+        print("• python3 src/clear-files.py     - Clean up generated files manually")
         
     print("="*60)
 

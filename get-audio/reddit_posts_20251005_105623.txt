@@ -1,0 +1,118 @@
+REDDIT SCRAPER LOG - Started: 2025-10-05 10:56:23
+Subreddits: ['AmITheAsshole', 'AmIOverreacting']
+Filter: Posts under 1500 characters
+AI Cleaning: ENABLED (Groq)
+---POST_SEPARATOR---
+<<MALE>>
+ 
+Would I be the asshole if I confronted a dog owner over howling? 
+There is a dog owner with some kind of hound that often goes to a cafe right outside my apartment. 
+He goes on weekdays, weekends, and not at any recognizable schedule that I can identify. 
+It's a no dogs allowed cafe, so he keeps his dog outside while he orders, then stays for a while (shorter on weekdays, but hours on weekends) to chat with his friends.
+ 
+He comes around 8:30-9 in the mornings and his dog isn't howling the entire time that he's there, but it is regular and his dog is quite loud. 
+I live on a busy street, so I'm accustomed to noise and sleep through traffic, sirens, and chatter, but this dog has been consistently one that wakes me up.
+ 
+Would I be the asshole if I asked him to address his dog's howling or consider leaving his dog at home? 
+I know that this is something hound owners can work on (I have trained dogs before), but not every dog is the same.
+
+---HASHTAGS---
+#dogsofreddit #noiseconcerns #conflictreddit #aita #neighborsfromhell #dogtraining #sleepdeprivation #loudpets #cafeconundrum #relationshipconflict
+---POST_SEPARATOR---
+<<MALE>>
+Am I the asshole for my neighbor's "shared" fence drama.
+We recently spent over $20,000.00 to put up a new fence around our yard.
+We had just a chain link fence, and we put up a 6-foot high custom maple wood fence.
+We told all our neighbors that we would be doing this.
+No one had a problem with this.
+
+The neighbor behind us had previously taken their fence down, leaving only our chain link fence between our properties.
+This would not be a problem, but they have a swimming pool, and the laws for security and safety deem it necessary for them to have a 6-foot fence.
+(This was at the beginning of the summer, and we were not planning on putting our fence up until the late fall or the following spring.)
+
+We ended up not doing the fence until the following spring, and the neighbor never put their fence back up.
+Fast forward to a few weeks ago, we get a letter from the neighbor requesting us to sign and get notarized a "shared fence" agreement for the town that is required when parties share a fence and one has a pool.
+Am I the asshole for throwing the paper in the trash, or should I have contacted this neighbor?
+
+---HASHTAGS---
+#aita #fencedrama #neighborproblems #homeownerconflicts #poolregulations #sharedfence #yardwars #neighborfeuds #homeimprovement #propertydisputes
+---POST_SEPARATOR---
+<<MALE>>
+Am I the asshole for going to a school I want to go to, even if I leave my friends behind?
+Ok, to make one thing clear, these are not my best friends at my old school.
+They have many other friends with whom they are much closer, so my leaving does not make them friendless.
+
+So, in my city, there is a very, very prestigious and selective school that goes from 7 to 12.
+You have to take a challenging test, and I was originally put on the waitlist for the school.
+Anyways, when school started, after my first day at my old school, I was accepted off the waitlist.
+I was overjoyed, and I knew my friends would be somewhat mad or sad, but I thought that maybe they would be partially happy for me, and for the most part, I was right.
+Most of my friends were actually really nice, but two of them were the exact opposite.
+When I told them, they said that I was super mean for leaving them, that I did not deserve my acceptance, and that I was going to hate it.
+I understand why they would be mad, but they were just so furious at me.
+They were confused as to why I liked the other school more (I was being bullied at my old school, which they apparently did not know), and I was slightly confused by the difference in my other friends' reactions.
+
+---HASHTAGS---
+#amitheasshole #leavingbehind #friendshipconflict #bullying #newbeginnings #schoolstruggles #friendshipdrama #makingtoughchoices
+---POST_SEPARATOR---
+<<MALE>>
+Am I overreacting for feeling like my long-distance partner is not putting in enough effort?
+My partner and I have been dating for about four months.
+We met while he was in my city for a work project, and we had an amazing connection.
+When the project ended, he moved back to his city, which is about a five-hour drive away.
+We decided to try the long-distance thing.
+
+At first, it was great.
+We would video call almost every night, text throughout the day, and he would send me little "thinking of you" messages.
+But over the last month, things have changed.
+The calls have become less frequent, sometimes just a few minutes long.
+He takes hours to reply to texts, and when he does, they are short.
+He says he is just really busy and stressed with his new job.
+
+The problem is, I feel like I am the only one making an effort.
+I am always the one to initiate planning our next visit or suggesting we watch a movie together online.
+Last weekend, I found out he went to a concert with his friends.
+I was happy for him, but it also stung because he had told me he was "too swamped with work" to video call that night.
+
+I finally told him how I was feeling, that I was lonely and felt like a low priority.
+He got defensive and said I was being needy and overreacting to a "busy patch."
+He said long distance requires trust and that I was suffocating him.
+Now I feel guilty and confused.
+Am I overreacting by expecting more consistent communication, or are my feelings valid?
+I really like him, but this is starting to make me feel insecure.
+
+---HASHTAGS---
+#longdistancerelationships #relationshipstruggles #amioverreacting #lonelyinlove #trustissues #communicationmatters #distanceanddoubt #feelingneglected #loveconcerns #aita
+---POST_SEPARATOR---
+<<FEMALE>>
+My husband keeps lying over stupid things - Am I overreacting.
+It is the fourth time I find my husband lying to me about trivial things.
+Things that have zero importance, but I now no longer feel that I can trust anything he says.
+If he is lying about insignificant things, what is going to happen when something important comes up?
+Lying is something I consider unacceptable in my partner.
+I have mentioned how much it bothers me, and how it affects the way I see him.
+I no longer see our relationship lasting, as I do not feel I can trust him.
+Am I overreacting?
+
+---HASHTAGS---
+#aita #relationshipproblems #lyinghusband #trustissues #marriageconflicts #unfaithfulpartner #toxicrelationships #amioverreacting
+---POST_SEPARATOR---
+<<MALE>>
+Am I overreacting into thinking we are making a mistake by having an abortion?
+My girlfriend is pregnant, it is 4 weeks (she was coming off the birth control, we were meeting after 2 months, so one night we ran out of condoms, and she took a pill the next day).
+The context is that we are in a long-distance relationship.
+We have plans to get married and for her to move to Europe.
+Currently, my company has shut down, so I am on notice until January and will get my severance.
+I have a few interviews lined up.
+We are a twenty-nine male and a thirty-two female.
+We decided that we do not want to keep the baby due to the timing, and with neither of us potentially having a job, if somehow I cannot find a job and she resigns from her current one, and then cannot move because I will not be able to sponsor her if I do not have a job.
+Currently, I am also eligible for citizenship.
+And we decided we will try for a kid once we get citizenship, a stable job, and she is with me and no longer in a long-distance relationship.
+It sounds all logical.
+I know she is sad too.
+But some part of me just wants to see and keep the kid and figure stuff out later.
+I seriously do not know what to do.
+I love her.
+We have been together for 14 months.
+
+---HASHTAGS---
+#aita #longdistancerelationship #abortion #relationshipconflicts #pregnancy #jobloss #uncertainfuture #love #familyplanning #redditoriginals

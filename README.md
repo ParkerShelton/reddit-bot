@@ -2,12 +2,24 @@
 
 This project provides a Reddit scraper that extracts posts from specified subreddits, with optional AI cleaning via Groq API, and can generate audio from the text.
 
-## Files
+## Project Structure
 
+### Root Directory
+- `README.md` - This documentation file
+- `requirements.txt` - Python dependencies
+- `run.sh` - Shell script to run the bot with dependency checking
+- `api_key.txt` - Your Groq API key (will be created if not present)
+
+### Source Code (`src/` directory)
 - `console_interface.py` - Interactive command-line interface to configure and run the bot
 - `main.py` - Core Reddit scraping functionality
 - `voice-over.py` - Script for generating audio from scraped text (if available)
-- `run.sh` - Shell script to automatically run the console interface with the appropriate Python version
+- `install.py` - Dependency installation script
+- `clear-files.py` - Utility to clean up generated files (if available)
+
+### Generated Directories
+- `get-audio/` - Directory where scraped posts are saved
+- `old-posts/` - Directory for archiving old posts
 
 ## Getting Started
 
@@ -18,7 +30,7 @@ This project provides a Reddit scraper that extracts posts from specified subred
    
    You can also run the installation script directly:
    ```
-   python3 install.py
+   python3 src/install.py
    ```
 
 2. If you want to use the AI cleaning feature, you'll need a Groq API key. You can provide it during the console interface setup or add it to an `api_key.txt` file.
@@ -32,7 +44,7 @@ This project provides a Reddit scraper that extracts posts from specified subred
    
    Alternatively, you can run the console interface directly:
    ```
-   python3 console_interface.py
+   python3 src/console_interface.py
    ```
    
    Note: Use `python3` instead of `python` if you're on macOS or Linux where both Python 2 and 3 are installed.
