@@ -18,7 +18,8 @@ subreddits = ['AmITheAsshole', 'AmIOverreacting'] #, 'AmIOverreacting, Forbidden
 USE_AI_CLEANING = True  # Set to False to disable AI processing
 
 # Output folder configuration
-OUTPUT_FOLDER = "C:/Users/parke/Desktop/youtube/text/raw-text"  # Folder where text files will be saved
+# OUTPUT_FOLDER = "C:/Users/parke/Desktop/youtube/text/raw-text"  # Folder where text files will be saved
+OUTPUT_FOLDER = "get-audio"  # Folder where text files will be saved
 
 # API Key (reads from api_key.txt file, or falls back to environment variable)
 def load_api_key():
