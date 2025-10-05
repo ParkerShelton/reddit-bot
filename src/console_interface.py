@@ -56,14 +56,6 @@ def get_boolean_input(prompt, default=True):
         return default
     return response[0] == 'y'
 
-def create_api_key_file(api_key):
-    """Create or update the API key file"""
-    # Get the path to the root directory
-    root_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-    api_key_path = os.path.join(root_dir, 'api_key.txt')
-    with open(api_key_path, 'w') as f:
-        f.write(api_key)
-    print("API key saved successfully.")
 
 def main():
     """Main function to collect user input and run the Reddit bot"""
@@ -79,30 +71,24 @@ def main():
     config = {}
     
     # Ask for subreddits
-    default_subreddits = "AmITheAsshole,AmIOverreacting"
+    default_subreddits = "AmITheAsshole"
     subreddits_input = get_user_input("Enter subreddit names (comma-separated)", default_subreddits)
     config['subreddits'] = [s.strip() for s in subreddits_input.split(',')]
     
-    # Ask for Groq API key
-    api_key = ""
-    use_existing = False
-    
-    # Get the path to the root directory
+    # Check for Groq API key in api_key.txt
     root_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     api_key_path = os.path.join(root_dir, 'api_key.txt')
     
-    # Check if api_key.txt exists
-    if os.path.exists(api_key_path):
-        use_existing = get_boolean_input("Use existing API key from api_key.txt", True)
+    # Always check if api_key.txt exists
+    api_key_exists = os.path.exists(api_key_path) and os.path.getsize(api_key_path) > 0
     
-    if not use_existing:
-        default_api_key = ""
-        api_key = get_user_input("Enter your Groq API key (or leave empty to disable AI cleaning)", default_api_key)
-        if api_key:
-            create_api_key_file(api_key)
+    if not api_key_exists:
+        print("\n⚠️ Warning: No API key found in api_key.txt")
+        print("Please create the file 'api_key.txt' in the root directory with your Groq API key.")
+        print("AI cleaning will be disabled.\n")
     
-    # Hardcode AI cleaning to always be enabled if API key exists
-    config['use_ai_cleaning'] = True if api_key or use_existing else False
+    # AI cleaning is enabled only if api_key.txt exists
+    config['use_ai_cleaning'] = api_key_exists
     
     # Ask for auto-generate audio preference
     default_audio_generation = True
@@ -155,9 +141,7 @@ def main():
     print("="*60)
     print("Summary:")
     print(f"• Subreddits: {', '.join(config['subreddits'])}")
-    print(f"• AI Cleaning: {'Enabled' if config['use_ai_cleaning'] else 'Disabled'} (Fixed setting)")
     print(f"• Auto-generate Audio: {'Yes' if config['auto_generate_audio'] else 'No'}")
-    print(f"• Output Folder: {config['output_folder']} (Fixed setting)")
     print(f"• Sort Type: {config['sort_type']}")
     print(f"• Posts Per Subreddit: {config['limit']}")
     print(f"• Maximum Character Count: {config['max_chars']} characters (~{config['max_chars'] // 1500} minute(s) reading time)")

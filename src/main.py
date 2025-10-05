@@ -63,18 +63,38 @@ if not GROQ_API_KEY:
     print("AI cleaning will be disabled.")
     USE_AI_CLEANING = False
 
-def generate_hashtags_with_ai(post):
-    """Use AI to generate relevant hashtags for social media"""
+def generate_youtube_content_with_ai(post):
+    """Generate YouTube Shorts titles, description, and hashtags"""
     if not USE_AI_CLEANING or not GROQ_API_KEY:
-        return ""
+        return "", "", ""
     
-    prompt = f"""Based on this Reddit post, generate 5 or so relevant hashtags for YouTube and TikTok.
+    prompt = f"""Based on this Reddit post, create content for a YouTube Shorts video:
+
+1. Generate 5-7 relevant hashtags for YouTube.
 Focus on: the main topic, emotions, relationships, conflicts, and general AITA/Reddit content.
-Return ONLY the hashtags separated by spaces, no explanations or numbering. Make sure everything is in LOWERCASE
+Make sure all hashtags are LOWERCASE.
+
+2. Create 5-6 engaging YouTube Shorts titles (40-50 characters each).
+Each title should end with 2 or 3 of the most relevant hashtags from above.
+Make titles catchy and clickable but not clickbait.
+
+3. Create a YouTube Shorts description (1-2 sentences) that incorporates the hashtags naturally at the end.
+
+Format your response exactly like this:
+---HASHTAGS---
+hashtag1 hashtag2 hashtag3 hashtag4 hashtag5
+
+---TITLES---
+Title 1 #relevanthashtag
+Title 2 #anotherhashtag
+Title 3 #relevanthashtag
+[etc.]
+
+---DESCRIPTION---
+A compelling description sentence or two. #hashtag1 #hashtag2 #hashtag3 #hashtag4 #hashtag5
 
 Post: {post}
-
-Hashtags:"""
+"""
 
     try:
         url = "https://api.groq.com/openai/v1/chat/completions"
@@ -86,17 +106,51 @@ Hashtags:"""
             "model": "llama-3.3-70b-versatile",
             "messages": [{"role": "user", "content": prompt}],
             "temperature": 0.7,
-            "max_tokens": 200
+            "max_tokens": 500
         }
         
         response = requests.post(url, headers=headers, json=data, timeout=30)
         response.raise_for_status()
         result = response.json()
-        hashtags = result['choices'][0]['message']['content'].strip()
-        return hashtags
+        content = result['choices'][0]['message']['content'].strip()
+        
+        # Parse the response to extract hashtags, titles, and description
+        hashtags = ""
+        titles = []
+        description = ""
+        
+        current_section = None
+        for line in content.split('\n'):
+            if line.strip() == "---HASHTAGS---":
+                current_section = "hashtags"
+            elif line.strip() == "---TITLES---":
+                current_section = "titles"
+            elif line.strip() == "---DESCRIPTION---":
+                current_section = "description"
+            elif line.strip() and current_section == "hashtags":
+                hashtags = line.strip()
+            elif line.strip() and current_section == "titles":
+                titles.append(line.strip())
+            elif line.strip() and current_section == "description":
+                if description:
+                    description += "\n" + line.strip()
+                else:
+                    description = line.strip()
+        
+        return hashtags, titles, description
     except Exception as e:
-        print(f"⚠ Hashtag generation failed: {e}")
+        print(f"⚠ YouTube content generation failed: {e}")
+        return "", [], ""
+
+
+def generate_hashtags_with_ai(post):
+    """Use AI to generate relevant hashtags for social media (legacy function)"""
+    if not USE_AI_CLEANING or not GROQ_API_KEY:
         return ""
+    
+    # Call the new comprehensive function and just return the hashtags
+    hashtags, _, _ = generate_youtube_content_with_ai(post)
+    return hashtags
 
 def clean_text_with_ai(title, content):
     """Cleans and tags a whole post (title + content) at once"""
@@ -152,28 +206,59 @@ def clean_with_groq(prompt):
     return result['choices'][0]['message']['content'].strip()
 
 def get_random_headers():
+    # More varied and up-to-date user agents
     user_agents = [
+        # Chrome on Windows
+        'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
         'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36',
+        # Chrome on Mac
+        'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
         'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36',
+        # Firefox on Windows
         'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/119.0',
-        'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:109.0) Gecko/20100101 Firefox/119.0',
-        'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.1 Safari/605.1.15'
+        'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:120.0) Gecko/20100101 Firefox/120.0',
+        # Firefox on Mac
+        'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:109.0) Gecko/20100101 Firefox/109.0',
+        'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:120.0) Gecko/20100101 Firefox/120.0',
+        # Safari
+        'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.1 Safari/605.1.15',
+        'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.6 Safari/605.1.15',
+        # Edge
+        'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36 Edg/119.0.0.0',
+        'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36 Edg/119.0.0.0'
     ]
     
-    return {
+    # Random accept language with appropriate weighting
+    accept_languages = [
+        'en-US,en;q=0.9',
+        'en-US,en;q=0.8',
+        'en-GB,en;q=0.9,en-US;q=0.8',
+        'en-CA,en;q=0.9,en-US;q=0.8',
+        'en;q=0.9',
+    ]
+    
+    # Randomize some header values to appear more human-like
+    headers = {
         'User-Agent': random.choice(user_agents),
         'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7',
-        'Accept-Language': 'en-US,en;q=0.9',
+        'Accept-Language': random.choice(accept_languages),
         'Accept-Encoding': 'gzip, deflate, br',
         'DNT': '1',
         'Connection': 'keep-alive',
         'Upgrade-Insecure-Requests': '1',
         'Sec-Fetch-Dest': 'document',
         'Sec-Fetch-Mode': 'navigate',
-        'Sec-Fetch-Site': 'none',
+        'Sec-Fetch-Site': random.choice(['none', 'same-origin']),
         'Sec-Fetch-User': '?1',
-        'Cache-Control': 'max-age=0'
+        'Referer': 'https://www.google.com/' if random.random() > 0.5 else 'https://old.reddit.com/',
+        'Cache-Control': 'max-age=0',
+        # Add some randomness to the headers
+        'Sec-Ch-Ua': '"Not_A Brand";v="8", "Chromium";v="120"', 
+        'Sec-Ch-Ua-Mobile': '?0',
+        'Sec-Ch-Ua-Platform': '"' + random.choice(['Windows', 'macOS', 'Linux']) + '"',
     }
+    
+    return headers
 
 session = requests.Session()
 
@@ -234,12 +319,14 @@ def save_post_to_file(title, post_content, filename):
         print(f"🤖 Cleaning title and content with AI...")
         cleaned_post = clean_text_with_ai(title, post_content)
         
-        print(f"🏷️ Generating hashtags...")
-        hashtags = generate_hashtags_with_ai(cleaned_post)
+        print(f"🎬 Generating YouTube Shorts content...")
+        hashtags, shorts_titles, shorts_description = generate_youtube_content_with_ai(cleaned_post)
     else:
         cleaned_title = title
         cleaned_content = post_content
         hashtags = ""
+        shorts_titles = []
+        shorts_description = ""
     
     with open(filename, 'a', encoding='utf-8') as f:
         f.write(f"---POST_SEPARATOR---\n")
@@ -249,15 +336,31 @@ def save_post_to_file(title, post_content, filename):
             f.write(f"{cleaned_title}\n")
             f.write(f"{cleaned_content}\n")
         
-        # Add hashtags section
+        # Add YouTube content sections
         if hashtags:
-            f.write(f"\n---HASHTAGS---\n{hashtags}\n")
+            # Add # to each hashtag
+            formatted_hashtags = ' '.join([f'#{tag}' for tag in hashtags.split()])
+            f.write(f"\n---HASHTAGS---\n{formatted_hashtags}\n")
+        
+        if shorts_titles:
+            f.write(f"\n---SHORTS_TITLES---\n")
+            for title in shorts_titles:
+                f.write(f"{title}\n")
+        
+        if shorts_description:
+            f.write(f"\n---SHORTS_DESCRIPTION---\n{shorts_description}\n")
 
-def process_response(response, filename):
+def process_response(response, filename, subreddit):
     print(f"Status Code: {response.status_code}")
     
     if response.status_code == 200:
         try:
+            # Check if the page might indicate a banned subreddit
+            if 'banned' in response.text[:1000].lower():
+                print(f"\n⚠️ Warning: Subreddit r/{subreddit} appears to be banned or inaccessible")
+                print("Skipping this subreddit. Try another one or check if it exists.\n")
+                return
+                
             soup = BeautifulSoup(response.content, 'html.parser')
             posts = soup.find_all('div', class_='thing')
             
@@ -327,7 +430,19 @@ def process_response(response, filename):
         print("Response content:", response.text[:500])
 
 def respectful_delay():
-    time.sleep(random.uniform(15, 25))
+    """Adds a respectful delay between requests to avoid overloading servers
+    and to reduce the chance of being detected as a bot"""
+    # More randomized delay between 20-35 seconds
+    base_delay = random.uniform(20, 35)
+    
+    # Add small random noise to make the pattern less predictable
+    noise = random.uniform(-2, 2)
+    
+    # Ensure minimum delay is at least 18 seconds
+    total_delay = max(18, base_delay + noise)
+    
+    print(f"Waiting for {total_delay:.1f} seconds to be respectful to Reddit's servers...")
+    time.sleep(total_delay)
 
 def scrape_with_delays(urls, filename):
     timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
@@ -344,10 +459,17 @@ def scrape_with_delays(urls, filename):
     time.sleep(random.uniform(3, 7))
     
     for url in urls:
-        print(f"Scraping: {url}")
+        # Extract subreddit name from URL for error reporting
+        subreddit = "unknown"
+        try:
+            subreddit = url.split('/r/')[1].split('/')[0]
+        except IndexError:
+            pass
+            
+        print(f"Scraping: {url} (r/{subreddit})")
         headers = get_random_headers()
         response = session.get(url, headers=headers, timeout=30)
-        process_response(response, filename)
+        process_response(response, filename, subreddit)
         respectful_delay()
 
 def generate_reddit_urls(subreddits, sort_type='new', limit=25):

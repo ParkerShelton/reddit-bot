@@ -2,25 +2,6 @@
 
 This project provides a Reddit scraper that extracts posts from specified subreddits, with optional AI cleaning via Groq API, and can generate audio from the text.
 
-## Project Structure
-
-### Root Directory
-- `README.md` - This documentation file
-- `requirements.txt` - Python dependencies
-- `run.sh` - Shell script to run the bot with dependency checking
-- `api_key.txt` - Your Groq API key (will be created if not present)
-
-### Source Code (`src/` directory)
-- `console_interface.py` - Interactive command-line interface to configure and run the bot
-- `main.py` - Core Reddit scraping functionality
-- `voice-over.py` - Script for generating audio from scraped text (if available)
-- `install.py` - Dependency installation script
-- `clear-files.py` - Utility to clean up generated files (if available)
-
-### Generated Directories
-- `get-audio/` - Directory where scraped posts are saved
-- `old-posts/` - Directory for archiving old posts
-
 ## Getting Started
 
 1. The required dependencies will be checked and installed automatically when running the script for the first time. If you prefer to install them manually:
@@ -65,19 +46,5 @@ This project provides a Reddit scraper that extracts posts from specified subred
 - Integration with voice generation (requires voice-over.py)
 - Configurable through an easy-to-use console interface
 
-## Configuration Options
-
-- **Subreddits**: Specify which subreddits to scrape (comma-separated)
-- **Auto-generate Audio**: Automatically run the voice-over script after scraping
-- **Sort Type**: How to sort posts (new, hot, top, rising)
-- **Posts Per Subreddit**: How many posts to fetch from each subreddit
-- **Maximum Character Count**: Limit post length to this many characters (1500 chars ≈ 1 minute reading time)
-
-### Fixed Settings
-
-- **AI Cleaning**: Always enabled if a Groq API key is available
-- **Output Folder**: Always set to "get-audio"
-
 ## Note
-
 This tool respects Reddit's robots.txt and implements delays between requests to avoid overloading the servers.
