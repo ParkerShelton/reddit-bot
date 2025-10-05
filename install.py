@@ -100,22 +100,26 @@ def main():
     # Create required directories
     print("\nChecking required directories...")
     create_directory("get-audio")
-    create_directory("audio_posts")
     create_directory("old-posts")
     
     # Create API key file if it doesn't exist
     create_api_key_file()
     
-    print("\n" + "=" * 60)
+    print("\n" + "="*60)
     print("✅ Installation complete!")
-    print("=" * 60)
-    print("\nYou can now run the Reddit bot with:")
-    print("python main.py")
-    print("\nTo convert text to audio:")
-    print("python voice-over.py")
-    print("\nTo clear audio and post files:")
-    print("python clear-files.py")
-    print("=" * 60)
+    print("="*60)
+    print("\nYou can now use the Reddit bot:")
+    print("1. ./run.sh               - Run the interactive console interface (recommended)")
+    print("2. python3 console_interface.py - Run the interactive console directly")
+    
+    if os.path.exists("voice-over.py"):
+        print("\nFor manual operations:")
+        print("• python3 voice-over.py      - Convert text posts to audio manually")
+    
+    if os.path.exists("clear-files.py"):
+        print("• python3 clear-files.py     - Clean up generated files manually")
+        
+    print("="*60)
 
 if __name__ == "__main__":
     main()

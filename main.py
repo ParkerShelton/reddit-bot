@@ -7,19 +7,35 @@ import os
 from pathlib import Path
 import subprocess
 import sys
+import json
 
-# Configuration
-AUTO_GENERATE_AUDIO = True  # Set to False to disable automatic audio generation
+# Default Configuration
 TTS_SCRIPT_NAME = "voice-over.py"  # Name of your TTS script
 
-subreddits = ['AmITheAsshole', 'AmIOverreacting'] #, 'AmIOverreacting, ForbiddenFacts101'
-
-# AI Processing configuration
-USE_AI_CLEANING = True  # Set to False to disable AI processing
-
-# Output folder configuration
-# OUTPUT_FOLDER = "C:/Users/parke/Desktop/youtube/text/raw-text"  # Folder where text files will be saved
-OUTPUT_FOLDER = "get-audio"  # Folder where text files will be saved
+# Check for configuration from console_interface.py
+config_json = os.environ.get("REDDIT_BOT_CONFIG", "{}")
+try:
+    config = json.loads(config_json)
+    # Use config values or fall back to defaults
+    subreddits = config.get('subreddits', ['AmITheAsshole', 'AmIOverreacting'])
+    USE_AI_CLEANING = config.get('use_ai_cleaning', True)
+    AUTO_GENERATE_AUDIO = config.get('auto_generate_audio', True)
+    OUTPUT_FOLDER = config.get('output_folder', "get-audio")
+    SORT_TYPE = config.get('sort_type', 'new')
+    POST_LIMIT = config.get('limit', 25)
+    MAX_CHARS = config.get('max_chars', 1500)  # New parameter for max characters
+    
+    print(f"Using configuration from console interface")
+    
+except json.JSONDecodeError:
+    # Default configuration if no valid config found
+    subreddits = ['AmITheAsshole', 'AmIOverreacting']
+    USE_AI_CLEANING = True  # Set to False to disable AI processing
+    AUTO_GENERATE_AUDIO = True  # Set to False to disable automatic audio generation
+    OUTPUT_FOLDER = "get-audio"  # Folder where text files will be saved
+    SORT_TYPE = 'new'
+    POST_LIMIT = 25
+    MAX_CHARS = 1500  # Default max characters
 
 # API Key (reads from api_key.txt file, or falls back to environment variable)
 def load_api_key():
@@ -283,12 +299,12 @@ def process_response(response, filename):
                         time.sleep(random.uniform(3, 6))
                         post_content, content_length = get_post_content(full_permalink)
                         
-                        if post_content and content_length <= 1500:
+                        if post_content and content_length <= MAX_CHARS:  # Using MAX_CHARS from config
                             save_post_to_file(title, post_content, filename)
                             print(f"✓ Saved post: '{title}' ({content_length} chars)")
                             posts_processed += 1
                         else:
-                            if content_length > 1500:
+                            if content_length > MAX_CHARS:
                                 print(f"✗ Skipping post '{title}' - too long ({content_length} characters)")
                             else:
                                 print(f"✗ Skipping post '{title}' - no content found")
@@ -297,7 +313,7 @@ def process_response(response, filename):
                     print(f"Error parsing post: {e}")
                     continue
             
-            print(f"Checked {posts_checked} posts, saved {posts_processed} posts under 1500 characters")
+            print(f"Checked {posts_checked} posts, saved {posts_processed} posts under {MAX_CHARS} characters")
                 
         except Exception as e:
             print(f"Error parsing HTML: {e}")
@@ -315,7 +331,7 @@ def scrape_with_delays(urls, filename):
     with open(filename, 'w', encoding='utf-8') as f:
         f.write(f"REDDIT SCRAPER LOG - Started: {timestamp}\n")
         f.write(f"Subreddits: {subreddits}\n")
-        f.write(f"Filter: Posts under 1500 characters\n")
+        f.write(f"Filter: Posts under {MAX_CHARS} characters\n")
         f.write(f"{ai_status}\n")
     
     print("Establishing session...")
@@ -344,8 +360,9 @@ output_filename = os.path.join(OUTPUT_FOLDER, f"reddit_posts_{datetime.now().str
 
 print(f"Starting scraper... Posts will be saved to: {output_filename}")
 print(f"AI Cleaning: {'ENABLED (Groq)' if USE_AI_CLEANING else 'DISABLED'}")
+print(f"Max character limit: {MAX_CHARS} characters")
 
-urls = generate_reddit_urls(subreddits)
+urls = generate_reddit_urls(subreddits, SORT_TYPE, POST_LIMIT)
 scrape_with_delays(urls, output_filename)
 
 print(f"\nScraping complete! Check '{output_filename}' for saved posts.")
