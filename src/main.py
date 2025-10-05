@@ -11,8 +11,8 @@ import json
 
 # Default Configuration
 TTS_SCRIPT_NAME = os.path.join(os.path.dirname(os.path.abspath(__file__)), "voice-over.py")  # Full path to TTS script
+SUBTITLES_SCRIPT_NAME = os.path.join(os.path.dirname(os.path.abspath(__file__)), "create-subtitles.py")  # Full path to subtitles script
 
-# Check for configuration from console_interface.py
 config_json = os.environ.get("REDDIT_BOT_CONFIG", "{}")
 try:
     config = json.loads(config_json)
@@ -458,8 +458,12 @@ def scrape_with_delays(urls, filename):
     print(f"Homepage status: {home_response.status_code}")
     time.sleep(random.uniform(3, 7))
     
-    for url in urls:
-        # Extract subreddit name from URL for error reporting
+    total_urls = len(urls)
+    
+    # Skip delays completely if there's only one subreddit
+    if total_urls == 1:
+        # Just process the single subreddit without delays
+        url = urls[0]
         subreddit = "unknown"
         try:
             subreddit = url.split('/r/')[1].split('/')[0]
@@ -470,8 +474,30 @@ def scrape_with_delays(urls, filename):
         headers = get_random_headers()
         response = session.get(url, headers=headers, timeout=30)
         process_response(response, filename, subreddit)
-        respectful_delay()
+        print("Processing complete. Moving on...")
+        return
+        
+    # If we have multiple subreddits, process them with delays
+    for i, url in enumerate(urls):
+        # Extract subreddit name for error reporting
+        subreddit = "unknown"
+        try:
+            subreddit = url.split('/r/')[1].split('/')[0]
+        except IndexError:
+            pass
+            
+        print(f"Scraping: {url} (r/{subreddit})")
+        headers = get_random_headers()
+        response = session.get(url, headers=headers, timeout=30)
+        process_response(response, filename, subreddit)
+        
+        # Only wait if this isn't the last subreddit
+        if i < total_urls - 1:
+            respectful_delay()
+        else:
+            print("All subreddits processed. Moving on...")
 
+# Function to generate Reddit URLs for the given subreddits
 def generate_reddit_urls(subreddits, sort_type='new', limit=25):
     urls = []
     for subreddit in subreddits:
@@ -511,6 +537,26 @@ if AUTO_GENERATE_AUDIO:
             print(f"\n{'='*80}")
             print("✅ Audio generation complete!")
             print(f"{'='*80}")
+            
+            # Now generate subtitles
+            if os.path.exists(SUBTITLES_SCRIPT_NAME):
+                print(f"\n{'='*80}")
+                print("📝 Starting subtitle generation...")
+                print(f"{'='*80}\n")
+                
+                try:
+                    # Run the subtitles script
+                    result = subprocess.run([sys.executable, SUBTITLES_SCRIPT_NAME], check=True)
+                    print(f"\n{'='*80}")
+                    print("✅ Subtitle generation complete!")
+                    print(f"{'='*80}")
+                except subprocess.CalledProcessError as e:
+                    print(f"\n❌ Error running subtitles script: {e}")
+                except Exception as e:
+                    print(f"\n❌ Unexpected error with subtitles: {e}")
+            else:
+                print(f"⚠ Warning: Subtitles script '{SUBTITLES_SCRIPT_NAME}' not found.")
+                print(f"Skipping automatic subtitle generation.")
         except subprocess.CalledProcessError as e:
             print(f"\n❌ Error running TTS script: {e}")
         except Exception as e:
@@ -520,3 +566,4 @@ if AUTO_GENERATE_AUDIO:
         print(f"Skipping automatic audio generation.")
 else:
     print(f"\n💡 Tip: Run 'python3 src/voice-over.py' to convert posts to audio!")
+    print(f"   Then run 'python3 src/create-subtitles.py' to generate subtitles.")

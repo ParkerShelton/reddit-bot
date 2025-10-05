@@ -80,6 +80,7 @@ def main():
         "requests": "For web requests",
         "beautifulsoup4": "For HTML parsing",
         "edge-tts": "For text-to-speech functionality",
+        "pysrt": "For subtitle file creation",
     }
 
     installed = get_installed_packages()

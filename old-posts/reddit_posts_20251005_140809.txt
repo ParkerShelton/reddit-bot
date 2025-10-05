@@ -1,0 +1,65 @@
+REDDIT SCRAPER LOG - Started: 2025-10-05 14:08:09
+Subreddits: ['AmITheAsshole']
+Filter: Posts under 1500 characters
+AI Cleaning: ENABLED (Groq)
+---POST_SEPARATOR---
+<<MALE>>
+Am I the asshole for not wanting to attend my older sister's baby shower?
+My older sister and her husband are excited to welcome a baby girl in January.
+We will be celebrating with family and friends at their baby shower on October 11th.
+Now, I will be honest, I, a 31 male, do not like baby showers.
+My family does not seem to get that.
+It feels like they are begging me to go, but I really do not want to.
+I am not big on family gatherings either.
+I understand some people might be upset if I do not show up, but I cannot live my life trying to please everyone.
+I am more of a recluse and enjoy being alone.
+I can support in other ways.
+What do you guys think?
+
+---HASHTAGS---
+#aita #hashtag2 #babyshowers #hashtag3 #familydrama #hashtag4 #relationships #hashtag5 #introvert
+
+---SHORTS_TITLES---
+Not a baby shower fan #babyshowers #familydrama
+Should i attend? #aita #introvert
+Baby shower blues #babyshowers #relationships
+Not my thing #familydrama #introvert
+Saying no to family #aita #familydrama
+Missing the baby shower #babyshowers #relationships
+
+---SHORTS_DESCRIPTION---
+Am I the asshole for skipping my sister's baby shower? I'm an introvert who hates family gatherings, but my family doesn't seem to understand #aita #babyshowers #familydrama #introvert #relationships
+---POST_SEPARATOR---
+<<MALE>>
+Am I the asshole for not cooking with my food labs group?
+I (17 male) am currently in a foods and nutrition class at my high school.
+Every Friday, we cook something.
+I often do the bare minimum with my team to at least seem like a decent human being, but the truth is, I have horrible social anxiety with people I barely know.
+I think differently, too; my brain notices things, and I often question them a lot forcefully.
+This is because I was diagnosed with autism when I was younger, so my brain functions somewhat differently, and I tend to also be more sensitive to sounds.
+I often pace around the kitchen in class, figuring out what comes next, cracking my knuckles or tapping my fingers as a way of stimming.
+Two weeks ago, my dog unfortunately passed away, and I took a break from school for about two days, returning on Friday.
+I opted out of cooking because my headspace was not good at all.
+The next week, I felt ill; my head was hurting, so I took a break again.
+You can probably guess what happened next, but I did not show up last week; I got sick and needed antibiotics.
+In fact, my entire family was sick and still is.
+I am going back tomorrow, on Monday, and I am scared they will think I left them to do all the work, that I am a freeloader of some sort.
+We also had an ingredient list-type summative that we had to do, and my group never did it.
+The teacher said if we did not do it, we need to bring in our own ingredients to make the meal instead of her buying them.
+So, I am kind of in trouble now.
+I do not have a job either, so... yeah.
+Anyway, that is all my talk.
+
+---HASHTAGS---
+##autismawareness ##socialanxiety ##aita ##highschoollife ##mentalhealthmatters ##redditstories ##schoolstruggles
+
+---SHORTS_TITLES---
+Not cooking with my group #aita #socialanxiety
+Struggling in foods class #highschoollife #autismawareness
+Am I the asshole for opting out? #aita #mentalhealthmatters
+Cooking with anxiety #socialanxiety #redditstories
+High school struggles are real #highschoollife #schoolstruggles
+Autism and social anxiety in school #autismawareness #aita
+
+---SHORTS_DESCRIPTION---
+Dealing with social anxiety and autism in a high school cooking class can be tough, especially when it feels like your group is relying on you. Sharing my story and wondering, am I the asshole for not cooking with my group? #aita #autismawareness #socialanxiety #highschoollife #mentalhealthmatters
